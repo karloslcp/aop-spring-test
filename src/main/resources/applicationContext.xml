@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/aop
+            http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <bean id="sampleAdder" class="sv.com.oci.aopspringtest.SampleAdder"/>
+
+    <bean id="doAfterReturningAspect" class="sv.com.oci.aopspringtest.AdderAfterReturnAspect"/>
+
+    <aop:config>
+        <aop:aspect id="aspects" ref="doAfterReturningAspect">
+            <aop:pointcut id="pointcutAfterReturning"
+                          expression="execution(* sv.com.oci.aopspringtest.SampleAdder+.*(..))"/>
+            <aop:after-returning method="afterReturn" returning="returnValue" pointcut-ref="pointcutAfterReturning"/>
+        </aop:aspect>
+    </aop:config>
+
+</beans>
