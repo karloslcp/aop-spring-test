@@ -3,6 +3,7 @@ package sv.com.oci.aopspringtest;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,5 +27,14 @@ public class AdderAfterAspect
     {
         logger.info("*************************");
         logger.info("After returning {}, result was {}", joinPoint.getSignature(), result);
+    }
+
+    @AfterThrowing(value = "execution(* SampleAdder+.*(..))", throwing = "exception")
+    public void afterThrowing(Throwable exception)
+    {
+        logger.error("An error has occurred, error message: {}", exception.getMessage());
+        logger.error("An error has occurred", exception);
+        logger.debug("Stack trace::::", exception);
+        logger.trace("Aqui va el trace:", exception);
     }
 }
